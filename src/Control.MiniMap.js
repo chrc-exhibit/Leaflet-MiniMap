@@ -1,3 +1,7 @@
+/* eslint-disable no-underscore-dangle, comma-dangle, quotes, strict, no-unused-vars */
+/* eslint-env browser, node, amd */
+/* global L */
+
 // Following https://github.com/Leaflet/Leaflet/blob/master/PLUGIN-GUIDE.md
 (function (factory, window) {
 
@@ -64,16 +68,31 @@
 
 			var mapOptions = {
 				attributionControl: false,
-				dragging: !this.options.centerFixed,
 				zoomControl: false,
 				zoomAnimation: this.options.zoomAnimation,
 				autoToggleDisplay: this.options.autoToggleDisplay,
-				touchZoom: this.options.centerFixed ? 'center' : !this._isZoomLevelFixed(),
-				scrollWheelZoom: this.options.centerFixed ? 'center' : !this._isZoomLevelFixed(),
-				doubleClickZoom: this.options.centerFixed ? 'center' : !this._isZoomLevelFixed(),
-				boxZoom: !this._isZoomLevelFixed(),
 				crs: map.options.crs
 			};
+			if (this.options.centerFixed) {
+				mapOptions.dragging = false;
+				mapOptions.touchZoom = "center";
+				mapOptions.scrollWheelZoom = "center";
+				mapOptions.doubleClickZoom = "center";
+			}
+			if (this._isZoomLevelFixed()) {
+				mapOptions.touchZoom = false;
+				mapOptions.scrollWheelZoom = false;
+				mapOptions.doubleClickZoom = false;
+				mapOptions.boxZoom = false;
+			}
+			if (this.options.interactive === false) {
+				mapOptions.dragging = false;
+				mapOptions.keyboard = false;
+				mapOptions.touchZoom = false;
+				mapOptions.scrollWheelZoom = false;
+				mapOptions.doubleClickZoom = false;
+				mapOptions.boxZoom = false;
+			}
 			mapOptions = L.Util.extend(this.options.mapOptions, mapOptions);  // merge with priority of the local mapOptions object.
 
 			this._miniMap = new L.Map(this._container, mapOptions);

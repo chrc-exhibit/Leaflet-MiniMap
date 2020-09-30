@@ -81,6 +81,8 @@ require(['leaflet-minimap'], function(MiniMap) {
 
 `strings`: Overrides the default strings allowing for translation. See below for available strings and `example/example_i18n.html` for an example.
 
+`interactive`: Setting to `false` will disable dragging, keyboard panning, touch zoom, box zoom, scroll zoom, and double-click zoom on the minimap.
+
 `mapOptions`: Sets Leaflet options for the MiniMap map. It does not override the MiniMap default map options but extends them.
 
 ### Available Strings
